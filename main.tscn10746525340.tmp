@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://bc6lehsl61d2v"]
+
+[ext_resource type="Script" uid="uid://dmvi71s7534lr" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bl070gckbek1j" path="res://counter_control.tscn" id="2_0xm2m"]
+
+[node name="Control" type="Control" unique_id=1571521702]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+
+[node name="Scroll" type="ScrollContainer" parent="." unique_id=1850890483]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBox" type="VBoxContainer" parent="Scroll" unique_id=1534990188]
+layout_mode = 2
+
+[node name="DefenderPanel" type="PanelContainer" parent="Scroll/VBox" unique_id=560300682]
+layout_mode = 2
+
+[node name="VBoxDef" type="VBoxContainer" parent="Scroll/VBox/DefenderPanel" unique_id=872328174]
+layout_mode = 2
+
+[node name="LabelDefender" type="Label" parent="Scroll/VBox/DefenderPanel/VBoxDef" unique_id=1916418343]
+layout_mode = 2
+
+[node name="TypeButtons" type="HBoxContainer" parent="Scroll/VBox/DefenderPanel/VBoxDef" unique_id=777295280]
+layout_mode = 2
+
+[node name="BtnInfantry" type="Button" parent="Scroll/VBox/DefenderPanel/VBoxDef/TypeButtons" unique_id=1880814796]
+layout_mode = 2
+
+[node name="BtnLight" type="Button" parent="Scroll/VBox/DefenderPanel/VBoxDef/TypeButtons" unique_id=1513920543]
+layout_mode = 2
+
+[node name="BtnHeavy" type="Button" parent="Scroll/VBox/DefenderPanel/VBoxDef/TypeButtons" unique_id=86379099]
+layout_mode = 2
+
+[node name="BtnFortified" type="Button" parent="Scroll/VBox/DefenderPanel/VBoxDef/TypeButtons" unique_id=2035427066]
+layout_mode = 2
+
+[node name="Counters" type="VBoxContainer" parent="Scroll/VBox/DefenderPanel/VBoxDef" unique_id=1888513319]
+layout_mode = 2
+
+[node name="HealthCounter" parent="Scroll/VBox/DefenderPanel/VBoxDef/Counters" unique_id=403856561 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="DefenseCounter" parent="Scroll/VBox/DefenderPanel/VBoxDef/Counters" unique_id=1471508870 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="AttackerPanel" type="PanelContainer" parent="Scroll/VBox" unique_id=468976469]
+layout_mode = 2
+
+[node name="VBoxAtt" type="VBoxContainer" parent="Scroll/VBox/AttackerPanel" unique_id=1897891682]
+layout_mode = 2
+
+[node name="LabelAttackerHeader" type="Label" parent="Scroll/VBox/AttackerPanel/VBoxAtt" unique_id=951102965]
+layout_mode = 2
+
+[node name="Counters" type="VBoxContainer" parent="Scroll/VBox/AttackerPanel/VBoxAtt" unique_id=14719802]
+layout_mode = 2
+
+[node name="AICounter" parent="Scroll/VBox/AttackerPanel/VBoxAtt/Counters" unique_id=904349088 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="PBCounter" parent="Scroll/VBox/AttackerPanel/VBoxAtt/Counters" unique_id=1641128801 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="HECounter" parent="Scroll/VBox/AttackerPanel/VBoxAtt/Counters" unique_id=641696774 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="FlameCounter" parent="Scroll/VBox/AttackerPanel/VBoxAtt/Counters" unique_id=1060066874 instance=ExtResource("2_0xm2m")]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Scroll/VBox" unique_id=2078457255]
+layout_mode = 2

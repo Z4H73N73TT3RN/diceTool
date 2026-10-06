@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://bimn8s078e823"]
+
+[ext_resource type="Script" uid="uid://dyw1dp2gbd4yf" path="res://test.gd" id="1_8uh7m"]
+[ext_resource type="PackedScene" uid="uid://bl070gckbek1j" path="res://counter_control.tscn" id="1_37kl0"]
+
+[node name="Control" type="Control" unique_id=906958163 node_paths=PackedStringArray("buttons")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8uh7m")
+buttons = []
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1532711362]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer" unique_id=904813090]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=1172449687]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=1069549778]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=1232110761]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer3" unique_id=707683216]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer" unique_id=1242682616]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="counter" parent="VBoxContainer/HBoxContainer6" unique_id=403856561 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="counter2" parent="VBoxContainer/HBoxContainer6" unique_id=1641063562 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=345537162]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="counter" parent="VBoxContainer/HBoxContainer" unique_id=1093663357 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="counter2" parent="VBoxContainer/HBoxContainer" unique_id=1897343874 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=12412646]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="counter" parent="VBoxContainer/HBoxContainer2" unique_id=217065747 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="counter2" parent="VBoxContainer/HBoxContainer2" unique_id=802741133 instance=ExtResource("1_37kl0")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer" unique_id=355627363]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer4" unique_id=1184394124]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "jhgztfderftghzj"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer" unique_id=1273519994]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer5" unique_id=922352912]
+layout_mode = 2
+size_flags_horizontal = 3

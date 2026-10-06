@@ -48,13 +48,13 @@ toggle_mode = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="test" parent="VBoxContainer/HBoxContainer6" unique_id=403856561 instance=ExtResource("1_37kl0")]
+[node name="health" parent="VBoxContainer/HBoxContainer6" unique_id=403856561 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 title = "counter"
 
-[node name="counter2" parent="VBoxContainer/HBoxContainer6" unique_id=1641063562 instance=ExtResource("1_37kl0")]
+[node name="defense" parent="VBoxContainer/HBoxContainer6" unique_id=1641063562 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -63,12 +63,12 @@ size_flags_vertical = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="counter" parent="VBoxContainer/HBoxContainer" unique_id=1093663357 instance=ExtResource("1_37kl0")]
+[node name="counter_ai" parent="VBoxContainer/HBoxContainer" unique_id=1093663357 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="counter2" parent="VBoxContainer/HBoxContainer" unique_id=1897343874 instance=ExtResource("1_37kl0")]
+[node name="counter_ap" parent="VBoxContainer/HBoxContainer" unique_id=1897343874 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -77,12 +77,12 @@ size_flags_vertical = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="counter" parent="VBoxContainer/HBoxContainer2" unique_id=217065747 instance=ExtResource("1_37kl0")]
+[node name="counter_he" parent="VBoxContainer/HBoxContainer2" unique_id=217065747 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 
-[node name="counter2" parent="VBoxContainer/HBoxContainer2" unique_id=802741133 instance=ExtResource("1_37kl0")]
+[node name="counter_flame" parent="VBoxContainer/HBoxContainer2" unique_id=802741133 instance=ExtResource("1_37kl0")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1

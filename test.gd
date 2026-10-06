@@ -10,12 +10,19 @@ const probability_ai = { 0: 2/3, 1 : 1/3}
 @onready var fort_btn: Button =  $VBoxContainer/HBoxContainer3/Button4
 @onready var buttons: Array[Button] = [inf_btn, light_btn, heavy_btn, fort_btn]
 #region
-@onready var counter: CounterControl = $VBoxContainer/HBoxContainer6/test
+
+@onready var health: CounterControl = $VBoxContainer/HBoxContainer6/health
+@onready var defense: CounterControl = $VBoxContainer/HBoxContainer6/defense
+@onready var counter_ai: CounterControl = $VBoxContainer/HBoxContainer/counter_ai
+@onready var counter_ap: CounterControl = $VBoxContainer/HBoxContainer/counter_ap
+@onready var counter_he: CounterControl = $VBoxContainer/HBoxContainer2/counter_he
+@onready var counter_flames: CounterControl = $VBoxContainer/HBoxContainer2/counter_flame
 #endregion
 
 var selectedType = null
 	
 func _ready() -> void:
+	selectedType = TYPES.INFANTRY
 	# Alle Buttons als Toggle-Buttons konfigurieren und mit der Klick-Funktion verbinden
 	for i in range(buttons.size()):
 		var btn = buttons[i]
@@ -25,19 +32,32 @@ func _ready() -> void:
 
 func _on_button_pressed(selected_index: int) -> void:
 	selectedType = selected_index
+	print("type is ", selected_index)
 	for i in range(buttons.size()):
 		# Nur der geklickte Button bleibt gedrückt (button_pressed = true)
 		buttons[i].button_pressed = (i == selected_index)
 
 func getDefenseDices() -> int:
-	var dices = 0
 	match selectedType:
-		TYPES.INFANTRY:
-			dices += counter.getValue()
-		TYPES.INFANTRY:
-			dices += counter.getValue()
-	return dices
+		TYPES.INFANTRY:	return counter_ai.getValue()
+		TYPES.LIGHT: return counter_ap.getValue()
+		TYPES.LIGHT: return counter_ap.getValue()
+		_: return 0
 
+func getDamageDices() -> int:
+	match selectedType:
+		TYPES.INFANTRY,TYPES.LIGHT:	return counter_ai.getValue()+counter_ap.getValue()
+		TYPES.HEAVY: return counter_ai.getValue()
+		_: return 0
 
+func getUnavaidoableDamage() -> int:
+	match selectedType:
+		TYPES.INFANTRY,TYPES.LIGHT:	return counter_flames.getValue()
+		#TYPES.HEAVY: return counter_ai.getValue()
+		_: return 0
+		
 func _on_compute_button_button_up() -> void:
-	print(getDefenseDices())
+	print("selected type: ", selectedType)
+	print("defense ", getDefenseDices())
+	print("un damage ", getUnavaidoableDamage())
+	print("damagerolls ", getDamageDices())

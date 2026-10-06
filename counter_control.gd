@@ -18,3 +18,7 @@ func _ready() -> void:
 	$HBoxContainer/LabelValue.text = str(value)
 	$HBoxContainer/BtnMinus.pressed.connect(func(): value -= 1; value_changed.emit(value))
 	$HBoxContainer/BtnPlus.pressed.connect(func(): value += 1; value_changed.emit(value))
+
+func getValue() -> int:
+	return value
+	#return $HBoxContainer/LabelValue.text

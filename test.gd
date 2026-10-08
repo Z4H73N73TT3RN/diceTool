@@ -57,7 +57,14 @@ func getUnavaidoableDamage() -> int:
 		_: return 0
 		
 func _on_compute_button_button_up() -> void:
+	var defenseDices = getDefenseDices()
 	print("selected type: ", selectedType)
-	print("defense ", getDefenseDices())
+	print("defense ", defenseDices)
 	print("un damage ", getUnavaidoableDamage())
 	print("damagerolls ", getDamageDices())
+	var rolls = Array()
+	var p = 2.0/3.0
+	for n in defenseDices:
+		rolls.append(DiceCalculator.binom_pmf(defenseDices,n, p))
+	
+	print(rolls)

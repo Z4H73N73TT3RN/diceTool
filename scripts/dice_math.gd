@@ -1,6 +1,9 @@
-class_name DiceMath
+class_name DiceCalculator
 extends RefCounted
 
+func _ready() -> void:
+	pass
+	
 # Binomialkoeffizient n choose k
 static func n_choose_k(n: int, k: int) -> float:
 	if k < 0 or k > n:

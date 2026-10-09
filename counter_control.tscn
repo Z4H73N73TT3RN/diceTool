@@ -15,7 +15,7 @@ size_flags_vertical = 6
 script = ExtResource("1_wcxvy")
 metadata/_edit_group_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1916162048]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=279478250]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,20 +23,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BtnMinus" type="Button" parent="HBoxContainer" unique_id=189252409]
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1518994033]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1916162048]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BtnMinus" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=189252409]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "-"
 
-[node name="LabelValue" type="Label" parent="HBoxContainer" unique_id=12769769]
+[node name="LabelValue" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=12769769]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BtnPlus" type="Button" parent="HBoxContainer" unique_id=1097317596]
+[node name="BtnPlus" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1097317596]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 3

@@ -17,6 +17,7 @@ const probability_ai = { 0: 2/3, 1 : 1/3}
 @onready var counter_ap: CounterControl = $VBoxContainer/HBoxContainer/counter_ap
 @onready var counter_he: CounterControl = $VBoxContainer/HBoxContainer2/counter_he
 @onready var counter_flames: CounterControl = $VBoxContainer/HBoxContainer2/counter_flame
+@onready var output: RichTextLabel = $VBoxContainer/HBoxContainer4/RichTextLabel
 #endregion
 
 var selectedType = null
@@ -29,6 +30,16 @@ func _ready() -> void:
 		btn.toggle_mode = true
 		btn.pressed.connect(func(): _on_button_pressed(i))
 	buttons[TYPES.INFANTRY].button_pressed = true
+	health.setValue(4)
+	health.setTitle("Health")
+	defense.setTitle("Defense")
+	counter_ai.setTitle("Anti-Infantry")
+	counter_ai.setValue(2)
+	counter_ap.setTitle("Armor-Piercing")
+	counter_ap.setValue(2)
+	counter_he.setTitle("High-Explosive")
+	
+	counter_flames.setTitle("Fire")
 
 func _on_button_pressed(selected_index: int) -> void:
 	selectedType = selected_index
@@ -38,11 +49,13 @@ func _on_button_pressed(selected_index: int) -> void:
 		buttons[i].button_pressed = (i == selected_index)
 
 func getDefenseDices() -> int:
+	var _defenseDices = 0
 	match selectedType:
-		TYPES.INFANTRY:	return counter_ai.getValue()
-		TYPES.LIGHT: return counter_ap.getValue()
-		TYPES.LIGHT: return counter_ap.getValue()
-		_: return 0
+		TYPES.INFANTRY:	_defenseDices + counter_ap.getValue()
+		TYPES.LIGHT: _defenseDices + counter_ai.getValue() + counter_he.getValue()
+		TYPES.HEAVY: _defenseDices + counter_ap.getValue() + counter_he.getValue()
+		_: _defenseDices + 0
+	return _defenseDices + defense.getValue()
 
 func getDamageDices() -> int:
 	match selectedType:
@@ -57,14 +70,65 @@ func getUnavaidoableDamage() -> int:
 		_: return 0
 		
 func _on_compute_button_button_up() -> void:
-	var defenseDices = getDefenseDices()
-	print("selected type: ", selectedType)
-	print("defense ", defenseDices)
-	print("un damage ", getUnavaidoableDamage())
-	print("damagerolls ", getDamageDices())
-	var rolls = Array()
-	var p = 2.0/3.0
-	for n in defenseDices:
-		rolls.append(DiceCalculator.binom_pmf(defenseDices,n, p))
+	var defenseRolls = getDefenseDices()
+	var unavoidableDamage = getUnavaidoableDamage()
+	var damageRolls = getDamageDices()
+	var heDamageRolls = counter_he.getValue()
 	
-	print(rolls)
+	print("selected type: ", selectedType)
+	print("health ", health.getValue())
+	print("defense ", defenseRolls)
+	print("ai: ", counter_ai.getValue())
+	print("ap: ", counter_ap.getValue())
+	print("un damage ", unavoidableDamage)
+	print("damagerolls ", damageRolls)
+	#
+	var dice_he: Dictionary = { 0: 1.0/3.0, 1: 1.0/2.0, 2: 1.0/6.0 }
+	var dice_pb_ai: Dictionary = { 0: 0.0, 1: 1.0 }
+
+	var liste_von_wuerfeln: Array = []
+# 1. Alle benötigten Angriffswürfel in einer Liste sammeln
+	for i in range(damageRolls):
+		# Für jeden Standard-Angriffswürfel (AI/PB) dessen Wahrscheinlichkeiten hinzufügen
+		liste_von_wuerfeln.append(dice_pb_ai)
+	for i in range(heDamageRolls):
+		# Für jeden Hochexplosiv-Würfel (HE) dessen Wahrscheinlichkeiten hinzufügen
+		liste_von_wuerfeln.append(dice_he)
+	# 2. Gesamtwahrscheinlichkeiten berechnen (Faltung):
+	# Berechnet für alle Würfel zusammen, wie wahrscheinlich jede mögliche Gesamtschadenssumme ist
+	var endverteilung: Dictionary = DiceCalculator.falte_wahrscheinlichkeiten(liste_von_wuerfeln)
+	
+	# 3. Für jeden Schadenswert berechnen, wie wahrscheinlich die passende Verteidigung ist
+	var abwehrRolls: Array = []
+	var sorted_keys: Array = endverteilung.keys()
+	sorted_keys.sort()
+	
+	for defenseRoll in sorted_keys:
+		# Binomialverteilung: defenseRolls = Anzahl Würfel, defenseRoll = benötigte Erfolge, 2/3 = Erfolgswahrscheinlichkeit
+		var abwehr = DiceCalculator.binom_pmf(defenseRolls, defenseRoll, 2.0 / 3.0)
+		abwehrRolls.append(abwehr)
+	
+	# 4. Abwehr-Ergebnisse in Dictionary umwandeln (Index = abgefangener Schaden)
+	var abwehrDict: Dictionary = {}
+	for i in range(abwehrRolls.size()):
+		abwehrDict[i] = abwehrRolls[i]
+		
+	# 5. Eingehenden Schaden um die abgewehrten Treffer reduzieren (Nettoschaden)
+	var reduction: Dictionary = DiceCalculator.apply_reduction(endverteilung, abwehrDict)
+	
+	print(endverteilung)
+	#output.text = str(endverteilung) + "\n" +str(abwehrRolls) + "\n"+str(abwehrDict)+ "\n" + str(reduction)
+	# 6. Ergebnisse für die Anzeige im RichTextLabel formatieren
+	var log_text: String = "Schaden | Wahrscheinlichkeit\n"
+	log_text += "-------------------------------\n"
+	
+	var sorted_reduction_keys: Array = reduction.keys()
+	sorted_reduction_keys.sort()
+	
+	for damage_val in sorted_reduction_keys:
+		var prob: float = reduction[damage_val]
+		# Formatiert die Wahrscheinlichkeit als Prozentwert mit 2 Nachkommastellen
+		log_text += str(damage_val) + " Schaden | " + str(snapped(prob * 100.0, 0.01)) + "%\n"
+	
+	output.text = log_text
+	

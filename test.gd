@@ -51,11 +51,12 @@ func _on_button_pressed(selected_index: int) -> void:
 func getDefenseDices() -> int:
 	var _defenseDices = 0
 	match selectedType:
-		TYPES.INFANTRY:	_defenseDices + counter_ap.getValue()
-		TYPES.LIGHT: _defenseDices + counter_ai.getValue() + counter_he.getValue()
-		TYPES.HEAVY: _defenseDices + counter_ap.getValue() + counter_he.getValue()
-		_: _defenseDices + 0
-	return _defenseDices + defense.getValue()
+		TYPES.INFANTRY:	_defenseDices += counter_ap.getValue()
+		TYPES.LIGHT: _defenseDices += (counter_ai.getValue() + counter_he.getValue())
+		TYPES.HEAVY: _defenseDices += (counter_ap.getValue() + counter_he.getValue())
+		_: _defenseDices += 0
+	_defenseDices += defense.getValue()
+	return _defenseDices
 
 func getDamageDices() -> int:
 	match selectedType:
@@ -87,7 +88,7 @@ func _on_compute_button_button_up() -> void:
 	var dice_pb_ai: Dictionary = { 0: 0.0, 1: 1.0 }
 
 	var liste_von_wuerfeln: Array = []
-# 1. Alle benötigten Angriffswürfel in einer Liste sammeln
+	# 1. Alle benötigten Angriffswürfel in einer Liste sammeln
 	for i in range(damageRolls):
 		# Für jeden Standard-Angriffswürfel (AI/PB) dessen Wahrscheinlichkeiten hinzufügen
 		liste_von_wuerfeln.append(dice_pb_ai)
@@ -130,5 +131,26 @@ func _on_compute_button_button_up() -> void:
 		# Formatiert die Wahrscheinlichkeit als Prozentwert mit 2 Nachkommastellen
 		log_text += str(damage_val) + " Schaden | " + str(snapped(prob * 100.0, 0.01)) + "%\n"
 	
+	# 7. Zerstörungschance (Destruction Chance) berechnen
+	var a: float = 0.0
+	var current_health = health.getValue()
+	
+	if current_health <= unavoidableDamage or (current_health + defenseRolls) <= (unavoidableDamage + damageRolls):
+		a = 1.0
+	else:
+		var p: float = 1.0 / 3.0
+		var k: int = (current_health - unavoidableDamage + defenseRolls) - damageRolls
+		var n: int = defenseRolls
+		
+		# Verhindern, dass k größer als n wird (sonst crasht prob_at_least_k)
+		k = clampi(k, 0, n)
+		
+		a = DiceCalculator.prob_at_least_k(n, k, p)
+		log_text += "\nMindestens " + str(k) + " Treffer bei " + str(n) + " Würfen: " + str(snapped(a * 100.0, 0.01)) + "%\n"
+	
+	log_text += "\nZerstörungschance: " + str(snapped(a * 100.0, 0.01)) + "%"
+	
+	# Am Ende das gesamte Log in das RichTextLabel schreiben
 	output.text = log_text
+	print(output.text)
 	
